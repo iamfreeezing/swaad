@@ -85,26 +85,8 @@ count = 0
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
-        if(message["role"] == 'assistant' and message['content'] != "How may I assist you today?"):
-            with stylable_container(
-                key="copy_button_"+str(count),
-                css_styles="""
-                        button:hover, button:active{
-                            background-color: green;
-                            border: none;
-                        }
-                        """,
-            ):
-                st.button("📋", on_click=on_copy_click, args=(message["content"],), key=count)
-            count += 1
 
 
-
-# def clear_chat_history():
-#     st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
-# st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
-
-# Function for generating LLaMA2 response. Refactored from https://github.com/a16z-infra/llama2-chatbot
 def generate_response(prompt_input):
     return gemini_trained.do_it_all(prompt_input)
 
@@ -128,20 +110,12 @@ def process_voice_input():
 with st.container():
     col1, col2 = st.columns([10,1])
     promptText = col1.chat_input("Enter your query:")
-    if col2.button("🎤") or promptText is not None:
+    if promptText is not None:
         st.session_state.copied = 0
-        if promptText is None or promptText == "":
-            promptText = process_voice_input()
         st.session_state.messages.append({"role": "user", "content": promptText})
         with st.chat_message("user"):
             st.write(promptText)
 
-
-# User-provided prompt
-# if promptText := st.chat_input("Try to say something"):
-#     st.session_state.messages.append({"role": "user", "content": promptText})
-#     with st.chat_message("user"):
-#         st.write(promptText)
 
 # Generate a new response if last message is not from assistant
 if st.session_state.messages[-1]["role"] != "assistant":
@@ -167,22 +141,22 @@ if st.session_state.messages[-1]["role"] != "assistant":
                 st.markdown(full_response, True)
 
                 # Copy Button
-                with stylable_container(
-                        key="copy_button",
-                        css_styles="""
-                            button:hover, button:active{
-                                background-color: green;
-                                border: none;
-                            }
-                            """,
-                ):
-                    st.button("📋", on_click=on_copy_click, args=(full_response,))
+                # with stylable_container(
+                #         key="copy_button",
+                #         css_styles="""
+                #             button:hover, button:active{
+                #                 background-color: green;
+                #                 border: none;
+                #             }
+                #             """,
+                # ):
+                    # st.button("📋", on_click=on_copy_click, args=(full_response,))
 
     message = {"role": "assistant", "content": full_response}
     st.session_state.messages.append(message)
 
-if st.session_state.copied:
-    st.toast(f"Response copied to clipboard", icon='✅')
+# if st.session_state.copied:
+#     st.toast(f"Response copied to clipboard", icon='✅')
 
 
 
