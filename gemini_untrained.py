@@ -6,7 +6,7 @@ $ pip install google-generativeai
 import google
 import google.generativeai as genai
 
-genai.configure(api_key="AIzaSyB_7sD1vbc0ndTw3jdYPamQSBVpq8ztYls")
+genai.configure(api_key="AIzaSyDDYg02Uc5oo6Ghgrx8PwE_SsIM5Jo6V_0")
 
 # convo = model.start_chat(history=[
 #   {

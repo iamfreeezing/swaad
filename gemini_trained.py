@@ -9,7 +9,7 @@ from gemini_untrained import get_response, get_reply, get_ques
 from recipeDB import recipeInfo
 import pickle
 
-genai.configure(api_key="AIzaSyDlPcLWQdCWkaVol1kEncwAk8rx66rplmI")
+genai.configure(api_key="AIzaSyDDYg02Uc5oo6Ghgrx8PwE_SsIM5Jo6V_0")
 
 # Set up the model
 generation_config = {
